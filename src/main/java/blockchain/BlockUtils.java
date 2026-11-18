@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
+import java.util.List;
 
 public final class BlockUtils {
     private BlockUtils() {
@@ -17,5 +18,27 @@ public final class BlockUtils {
         } catch (NoSuchAlgorithmException e) {
             throw new IllegalStateException("SHA-256 is not available", e);
         }
+    }
+
+    public static boolean isChainValid(List<Block> chain) {
+        if (chain == null || chain.isEmpty()) {
+            return false;
+        }
+
+        Block first = chain.get(0);
+        if (first == null || !"0".equals(first.getPreviousHash())) {
+            return false;
+        }
+
+        for (int i = 0; i < chain.size(); i++) {
+            Block current = chain.get(i);
+            if (current == null || !current.getHash().equals(current.calculateHash())) {
+                return false;
+            }
+            if (i > 0 && !current.getPreviousHash().equals(chain.get(i - 1).getHash())) {
+                return false;
+            }
+        }
+        return true;
     }
 }

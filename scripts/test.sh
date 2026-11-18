@@ -16,7 +16,9 @@ javac --release 17 -cp "$GSON_JAR" -d "$OUT_DIR" \
     src/main/java/blockchain/Block.java \
     src/main/java/blockchain/ChainDemo.java \
     src/test/java/blockchain/Day1Test.java \
-    src/test/java/blockchain/Day2Test.java
+    src/test/java/blockchain/Day2Test.java \
+    src/test/java/blockchain/Day3Test.java
 java -cp "$OUT_DIR:$GSON_JAR" blockchain.Day1Test
 java -cp "$OUT_DIR:$GSON_JAR" blockchain.Day2Test
+java -cp "$OUT_DIR:$GSON_JAR" blockchain.Day3Test
 java -cp "$OUT_DIR:$GSON_JAR" blockchain.ChainDemo

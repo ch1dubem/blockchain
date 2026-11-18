@@ -26,6 +26,8 @@ public final class ChainDemo {
     }
 
     public static void main(String[] args) {
-        System.out.println(toPrettyJson(createExampleChain()));
+        List<Block> chain = createExampleChain();
+        System.out.println("Chain is valid: " + BlockUtils.isChainValid(chain));
+        System.out.println(toPrettyJson(chain));
     }
 }
