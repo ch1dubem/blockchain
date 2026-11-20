@@ -24,7 +24,11 @@ public final class BlockUtils {
     }
 
     public static boolean isChainValid(List<Block> chain) {
-        if (chain == null || chain.isEmpty()) {
+        return isChainValid(chain, 0);
+    }
+
+    public static boolean isChainValid(List<Block> chain, int difficulty) {
+        if (difficulty < 0 || difficulty > 64 || chain == null || chain.isEmpty()) {
             return false;
         }
 
@@ -33,9 +37,12 @@ public final class BlockUtils {
             return false;
         }
 
+        String target = "0".repeat(difficulty);
         for (int i = 0; i < chain.size(); i++) {
             Block current = chain.get(i);
-            if (current == null || !current.getHash().equals(current.calculateHash())) {
+            if (current == null
+                    || !current.getHash().equals(current.calculateHash())
+                    || !current.getHash().startsWith(target)) {
                 return false;
             }
             if (i > 0 && !current.getPreviousHash().equals(chain.get(i - 1).getHash())) {

@@ -24,11 +24,12 @@ public final class MiningDemo {
     }
 
     public static void main(String[] args) {
-        List<Block> chain = createMinedChain(4, BlockUtils.DIFFICULTY_EASY);
+        int difficulty = BlockUtils.DIFFICULTY_EASY;
+        List<Block> chain = createMinedChain(4, difficulty);
         for (Block block : chain) {
             System.out.println("Block mined: " + block.getHash());
         }
-        System.out.println("Chain is valid: " + BlockUtils.isChainValid(chain));
+        System.out.println("Chain is valid: " + BlockUtils.isChainValid(chain, difficulty));
         String json = new GsonBuilder().setPrettyPrinting().create().toJson(chain);
         System.out.println(json);
     }
