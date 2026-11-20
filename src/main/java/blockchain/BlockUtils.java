@@ -7,6 +7,9 @@ import java.util.HexFormat;
 import java.util.List;
 
 public final class BlockUtils {
+    public static final int DIFFICULTY_EASY = 2;
+    public static final int DIFFICULTY_NORMAL = 4;
+    public static final int DIFFICULTY_HARD = 6;
     private BlockUtils() {
     }
 

@@ -24,7 +24,7 @@ public final class Day1Test {
 
     private static void blockHashIncludesItsFields() {
         Block block = new Block("first payload", "0", 1234L);
-        equal(BlockUtils.applySha256("01234first payload"), block.getHash(), "calculated block hash");
+        equal(BlockUtils.applySha256("012340first payload"), block.getHash(), "calculated block hash");
         equal(block.getHash(), block.calculateHash(), "stored and recalculated hashes");
         equal(64, block.getHash().length(), "SHA-256 hex length");
     }

@@ -6,7 +6,8 @@ public final class Block {
     private final String data;
     private final String previousHash;
     private final long timestamp;
-    private final String hash;
+    private String hash;
+    private int nonce;
 
     public Block(String data, String previousHash) {
         this(data, previousHash, System.currentTimeMillis());
@@ -20,7 +21,7 @@ public final class Block {
     }
 
     public String calculateHash() {
-        return BlockUtils.applySha256(previousHash + timestamp + data);
+        return BlockUtils.applySha256(previousHash + timestamp + nonce + data);
     }
 
     public String getData() {
@@ -37,5 +38,25 @@ public final class Block {
 
     public String getHash() {
         return hash;
+    }
+
+    public int getNonce() {
+        return nonce;
+    }
+
+    public void mineBlock(int difficulty) {
+        if (difficulty < 0 || difficulty > 64) {
+            throw new IllegalArgumentException("Difficulty must be between 0 and 64");
+        }
+
+        String target = "0".repeat(difficulty);
+        hash = calculateHash();
+        while (!hash.startsWith(target)) {
+            if (nonce == Integer.MAX_VALUE) {
+                throw new IllegalStateException("Nonce space exhausted before finding a valid hash");
+            }
+            nonce++;
+            hash = calculateHash();
+        }
     }
 }
